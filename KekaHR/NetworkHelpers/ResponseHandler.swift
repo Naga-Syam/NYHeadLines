@@ -1,0 +1,24 @@
+//
+//  ResponseHandler.swift
+//  KekaHR
+//
+//  Created by Naga on 29/04/24.
+//
+
+import Foundation
+
+class ResponseHandler {
+
+    func parseResonseDecode<T: Decodable>(
+        data: Data,
+        modelType: T.Type,
+        completionHandler: ResultHandler<T>
+    ) {
+        do {
+            let userResponse = try JSONDecoder().decode(modelType, from: data)
+            completionHandler(.success(userResponse))
+        }catch {
+            completionHandler(.failure(.decoding(error)))
+        }
+    }
+}
